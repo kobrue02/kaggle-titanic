@@ -1,6 +1,6 @@
 import pandas as pd
 
-from aux import features
+from vars import features
 
 
 def process(data):

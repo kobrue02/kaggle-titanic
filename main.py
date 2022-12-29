@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 
 from preprocessing import process, undersample
 from save_result import save
-from aux import features, models, vc
+from vars import features, models, vc
 
 import warnings
 warnings.filterwarnings("ignore")
