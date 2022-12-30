@@ -2,9 +2,9 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.naive_bayes import MultinomialNB, BernoulliNB, GaussianNB, ComplementNB
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.linear_model import LogisticRegression
 
-features = ["Age", "Sex", "Ticket", "Cabin"]
+features = ["Age", "Sex", "Cabin", "Ticket"]
 
 models = {"MLP": MLPClassifier(),
           "Bernoulli": BernoulliNB(),
@@ -14,7 +14,7 @@ models = {"MLP": MLPClassifier(),
           "Decision Tree": DecisionTreeClassifier(),
           "LogReg": LogisticRegression()}
 
-vc = VotingClassifier(estimators=[("mlp", MLPClassifier()),
-                                  ("nb", BernoulliNB()),
-                                  ("rdf", RandomForestClassifier()),
-                                  ("lgr", LogisticRegression())])
+vc = VotingClassifier(estimators=[('lgr', LogisticRegression()),
+                                  ('bnb', BernoulliNB()),
+                                  ('mlp', MLPClassifier()),
+                                  ('rdf', RandomForestClassifier())])
