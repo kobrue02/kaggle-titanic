@@ -64,9 +64,10 @@ def _solute(X, y):
 def charts(data):
 
     for label in features:
-        print(data[label].nunique())
-        data = undersample(data, label)
-        ax = sns.countplot(y=data[label][data["Survived"] == 0])
+        # print(data[label].nunique())
+        # print(set(data[label]))
+        # data = undersample(data, label)
+        ax = sns.countplot(y=data[label])#[data["Survived"] == 1])
         plt.bar_label(ax.containers[0])
         plt.title(label, color="red")
         plt.show()
