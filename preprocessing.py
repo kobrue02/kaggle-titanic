@@ -5,6 +5,14 @@ from vars import features
 
 def process(data):
 
+    data['Age'].fillna(data['Age'].mean(), inplace=True)
+    data["Age"] = data["Age"].astype('int')
+    for i in range(0, max(data['Age'])+1):
+        if i <= data['Age'].mean():
+            data['Age'] = data['Age'].replace(i, 0)
+        else:
+            data['Age'] = data['Age'].replace(i, 1)
+
     # changing Sex column to numeric values
     data.Sex = data.Sex.replace("male", 0)
     data.Sex = data.Sex.replace("female", 1)
@@ -12,7 +20,7 @@ def process(data):
     # removing the cabin number code
     data['Cabin'] = data['Cabin'].str.replace('\d+', '')
 
-    # changing alpha values in cabin column to numeric where a=1, b=2 and so on
+    # changing alpha values in cabin column to 1
     data["Cabin"] = data["Cabin"].str.replace("A", "1")
     data["Cabin"] = data["Cabin"].str.replace("B", "1")
     data["Cabin"] = data["Cabin"].str.replace("C", "1")
@@ -25,7 +33,7 @@ def process(data):
     data["Cabin"] = data["Cabin"].str[0]
 
     # get rid of whitespaces and nan values
-    data["Cabin"] = data["Cabin"].str.replace(" ", "")
+    data["Cabin"] = data["Cabin"].str.replace(" ", "0")
     data = data.fillna(0)
     data["Cabin"] = data["Cabin"].astype('int')
 
@@ -51,7 +59,7 @@ def process(data):
             data['Ticket'] = data['Ticket'].replace(k, 1)
 
     # remove useless column
-    data = data.drop(["Name", "PassengerId"], axis=1)
+    data = data.drop(["Name", "PassengerId", "SibSp", "Parch"], axis=1)
 
     data = data.astype({"Age": int, "Fare": int})
 
@@ -59,6 +67,7 @@ def process(data):
 
 
 def undersample(data, label):
+
     s0 = len(data[data[label] == 0])
     s1 = len(data[data[label] == 1])
     cut = min(s0, s1)
